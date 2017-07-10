@@ -111,4 +111,18 @@
 
 </div>
 
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+
+		window.print();
+
+		setTimeout(function(){
+			window.location = "{{CRUDBooster::adminPath('opd_visits/add')}}";
+		}, 1000);
+
+	});
+
+</script>
+
 @endsection

@@ -48,7 +48,7 @@
           <label class="col-md-2" for="patient_age">Age</label>  
           <div class="col-md-4">
             <input id="patient_age" name="patient_age" type="number" step="any" placeholder="Patient Age" class="form-control input-md"
-            value="{{ isset($data['opd_visit']->patient_age) ? $data['opd_visit']->patient_age : '' }}">
+            value="{{ isset($data['opd_visit']->patient_age) ? $data['opd_visit']->patient_age : '' }}" min="0" max="150">
           </div>
         </div>
 

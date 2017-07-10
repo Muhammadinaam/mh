@@ -19,4 +19,7 @@ Route::group(['middleware'=>['web','\crocodicstudio\crudbooster\middlewares\CBBa
 				
 	Route::get('opd_visits/{id}/print', 'AdminOpdVisitsController@print_opd_visit');
 
+
+	Route::get('reports/total_collection_report', 'ReportsController@totalCollectionReport');
+
 });
