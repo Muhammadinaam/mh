@@ -488,9 +488,11 @@
 					'updated_by' => CRUDBooster::myId(),
 				]);
 
+				DB::table('opd_visit_facilities')->where('opd_visit_id', $id)->delete();
+
 				foreach (request()->facility as $key => $facility_id) {
 					
-					if(request()->facility_amount[$key] != '' || request()->facility_amount[$key] != 0)
+					if(request()->facility_amount[$key] != '' && request()->facility_amount[$key] != 0)
 					DB::table('opd_visit_facilities')->insert([
 						'opd_visit_id' => $id,
 						'facility_id' => $facility_id,
