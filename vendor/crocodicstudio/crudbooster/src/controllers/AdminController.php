@@ -82,7 +82,7 @@ class AdminController extends CBController {
 		$users 		= DB::table(config('crudbooster.USER_TABLE'))->where("email",$email)->first(); 		
 
 		if(\Hash::check($password,$users->password)) {
-			$priv = DB::table("cms_privileges")->where("id",$users->id_cms_privileges)->first();
+			$priv = DB::table("cms_privileges")->where("id",$users->id_cms_privileges)->first();
 
 			$roles = DB::table('cms_privileges_roles')
 			->where('id_cms_privileges',$users->id_cms_privileges)
@@ -164,6 +164,8 @@ class AdminController extends CBController {
 		CRUDBooster::insertLog(trans("crudbooster.log_logout",['email'=>$me->email]));
 
 		Session::flush();
+		Cache::flush();
+		
 		return redirect()->route('getLogin')->with('message',trans("crudbooster.message_after_logout"));
 	}
 
