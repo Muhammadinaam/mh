@@ -21,5 +21,6 @@ Route::group(['middleware'=>['web','\crocodicstudio\crudbooster\middlewares\CBBa
 
 
 	Route::get('reports/total_collection_report', 'ReportsController@totalCollectionReport');
+	Route::get('reports/collection_by_users', 'ReportsController@collectionByUsers');
 
 });

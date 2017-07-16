@@ -552,8 +552,6 @@
 										return false;
 									}
 
-									showAddDataForm{{$name}}(false);
-
 									var trRow = '<tr>';
 									@foreach($form['columns'] as $c)
 										@if($c['type']=='select')
@@ -598,13 +596,15 @@
 										currentRow = null;
 									}
 									$('#btn-add-table-{{$name}}').val('Add');
-									$('#btn-reset-form-{{$name}}').click();									
+									$('#btn-reset-form-{{$name}}').click();	
+
+									showAddDataForm{{$name}}(false);								
 								}
 							</script>
 						</div>
 						<div class="panel-footer" align="right">
 							<input type='button' class='btn btn-warning' id="btn-cancel-form-{{$name}}" onclick="showAddDataForm{{$name}}(false)" value='Cancel'/>
-							<!-- <input type='button' class='btn btn-default' id="btn-reset-form-{{$name}}" onclick="resetForm{{$name}}()" value='Reset Form'/> -->
+							<input type='button' class='btn btn-default' id="btn-reset-form-{{$name}}" onclick="resetForm{{$name}}()" value='Reset Form'/>
 							<input type='button' id='btn-add-table-{{$name}}' class='btn btn-primary btn-add-to-table' onclick="addToTable{{$name}}()" value='Add'/>
 						</div>
 					</div>

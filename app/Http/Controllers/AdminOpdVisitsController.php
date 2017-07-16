@@ -474,6 +474,24 @@
 
 				DB::beginTransaction();
 
+				
+
+				DB::table('opd_visit_facilities')->where('opd_visit_id', $id)->delete();
+
+				$facilities_total_amount = 0;
+				foreach (request()->facility as $key => $facility_id) {
+					
+					if(request()->facility_amount[$key] != '' && request()->facility_amount[$key] != 0)
+					DB::table('opd_visit_facilities')->insert([
+						'opd_visit_id' => $id,
+						'facility_id' => $facility_id,
+						'amount' => request()->facility_amount[$key],
+					]);
+
+					$facilities_total_amount += request()->facility_amount[$key];
+				}
+
+
 				DB::table('opd_visits')->where('id', $id)->update([
 					'doctor_id' => request()->doctor_id,
 					'visit_date' => \Carbon\Carbon::parse(request()->visit_date)->format('Y-m-d') . ' ' .\Carbon\Carbon::now()->format('H:i:s'),
@@ -483,22 +501,12 @@
 					'patient_blood_pressure' => request()->patient_blood_pressure,
 					'patient_temperature' => request()->patient_temperature,
 					'doctor_fee' => request()->doctor_fee,
-					'total_fee' => request()->doctor_fee,
+					'total_fee' => request()->doctor_fee + $facilities_total_amount,
 					'updated_at' => \Carbon\Carbon::now()->format('Y-m-d H:i:s'),
 					'updated_by' => CRUDBooster::myId(),
 				]);
 
-				DB::table('opd_visit_facilities')->where('opd_visit_id', $id)->delete();
 
-				foreach (request()->facility as $key => $facility_id) {
-					
-					if(request()->facility_amount[$key] != '' && request()->facility_amount[$key] != 0)
-					DB::table('opd_visit_facilities')->insert([
-						'opd_visit_id' => $id,
-						'facility_id' => $facility_id,
-						'amount' => request()->facility_amount[$key],
-					]);
-				}
 
 				DB::commit();
 
