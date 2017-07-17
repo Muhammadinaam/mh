@@ -34,7 +34,9 @@
 			$this->col[] = ["label"=>"Qualification","name"=>"qualification"];
 			$this->col[] = ["label"=>"Opd Current Token Number","name"=>"opd_current_token_number"];
 			$this->col[] = ["label"=>"Opd Fee","name"=>"opd_fee"];
-			$this->col[] = ["label"=>"Is Activated","name"=>"is_activated"];
+			$this->col[] = ["label"=>"Is Activated","name"=>"is_activated",
+			"callback"=>function($row){return $row->is_activated == 1 ? '<span class="label label-success">Yes</span>' : 
+			'<span class="label label-danger">No</span>' ;}];
 			$this->col[] = ["label"=>"Deactivation Reason","name"=>"deactivation_reason"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 

@@ -53,7 +53,7 @@
         </div>
 
         <!-- Text input-->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label class="col-md-2" for="patient_blood_pressure">Blood Pressure</label>  
           <div class="col-md-4">
           <input id="patient_blood_pressure" name="patient_blood_pressure" type="text" placeholder="120 / 80" class="form-control input-md"
@@ -66,7 +66,7 @@
           value="{{ isset($data['opd_visit']->patient_temperature) ? $data['opd_visit']->patient_temperature : '' }}">
             
           </div>
-        </div>
+        </div> -->
 
 
         <hr>
@@ -264,22 +264,38 @@
 
     var asset_path = "{{asset('')}}";
 
-    
+
+
+    var doctors = {!! $data['doctors'] !!};
+
     $('[name=doctor_id]').change(function(){
       if( $('[name=doctor_id]').val() != '' )
       {
         $('[name=token_number]').val('');
         $('[name=doctor_fee]').val('');
 
-        $.ajax({
-          type: 'get',
-          url: 'http://localhost/mh/public/admin/doctors/detail/' + $('[name=doctor_id]').val(),
-          success: function(data)
+
+
+        for(var i = 0; i < doctors.length; i++)
+        {
+          if(doctors[i].id == $('[name=doctor_id]').val())
           {
-            $('[name=token_number]').val(data.opd_current_token_number);
-            $('[name=doctor_fee]').val(data.opd_fee);
+            $('[name=token_number]').val(doctors[i].opd_current_token_number);
+            $('[name=doctor_fee]').val(doctors[i].opd_fee);
+
+            break;
           }
-        })
+        }
+
+        // $.ajax({
+        //   type: 'get',
+        //   url: 'http://localhost/mh/public/admin/doctors/detail/' + $('[name=doctor_id]').val(),
+        //   success: function(data)
+        //   {
+        //     $('[name=token_number]').val(data.opd_current_token_number);
+        //     $('[name=doctor_fee]').val(data.opd_fee);
+        //   }
+        // })
       }
     });
     
@@ -336,21 +352,26 @@
             $('#please-wait').hide('slow');
 
 
-            swal({
-                   title: "Success",
-                   text: "Data Saved Successfully",
-                   type: "success",
-                   showCancelButton: false,
-                   confirmButtonColor: "#DD6B55",
-                   confirmButtonText: "Ok",
-                   closeOnConfirm: false 
-                  },
-                    function(){
-                      if(redirect_url == '')
-                        window.location.href = data.redirect_url;    
-                      else
-                        window.location.href = redirect_url;
-                  });
+            if(redirect_url == '')
+              window.location.href = data.redirect_url;    
+            else
+              window.location.href = redirect_url;
+
+            // swal({
+            //        title: "Success",
+            //        text: "Data Saved Successfully",
+            //        type: "success",
+            //        showCancelButton: false,
+            //        confirmButtonColor: "#DD6B55",
+            //        confirmButtonText: "Ok",
+            //        closeOnConfirm: false 
+            //       },
+            //         function(){
+            //           if(redirect_url == '')
+            //             window.location.href = data.redirect_url;    
+            //           else
+            //             window.location.href = redirect_url;
+            //       });
           }
         },
         error: function(jqXHR, exception){

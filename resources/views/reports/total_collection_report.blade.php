@@ -23,7 +23,7 @@
 
     <div class="row">
 
-      <div class="col-md-12">
+      <div class="col-md-12 no-print">
         @include('partials.dates_filter', compact('from_date', 'to_date'))        
       </div>
 

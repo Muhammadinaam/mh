@@ -20,7 +20,7 @@
 		          <div class="input-group">                 
 		            <span class="input-group-addon open-datetimepicker"><a><i class='fa fa-calendar '></i></a></span>
 		            <input type='text' title="From" required="" class='form-control notfocus input_date' name="from_date" id="from_date" 
-		            value="{{isset($from_date) ? $from_date : ''}}" />
+		            value="{{isset($from_date) ? $from_date : \Carbon\Carbon::now()->format('Y-m-d')}}" />
 		          </div>
 		          <div class="text-danger"></div>
 		          <p class='help-block'></p>
@@ -31,7 +31,7 @@
 		          <div class="input-group">                 
 		            <span class="input-group-addon open-datetimepicker"><a><i class='fa fa-calendar '></i></a></span>
 		            <input type='text' title="To" required class='form-control notfocus input_date' name="to_date" id="to_date" 
-		            value="{{isset($to_date) ? $to_date : ''}}" />
+		            value="{{isset($to_date) ? $to_date : \Carbon\Carbon::now()->format('Y-m-d')}}" />
 		          </div>
 		          <div class="text-danger"></div>
 		          <p class='help-block'></p>

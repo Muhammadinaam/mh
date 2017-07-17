@@ -29,6 +29,17 @@ class ReportsController extends Controller
         $from_date = null;
         $to_date = null;
 
+
+        if( $request->has('from_date') == false )
+        {
+          $request->merge( ['from_date' => \Carbon\Carbon::now()->format('Y-m-d') ] );
+        }       
+
+        if( $request->has('to_date') == false )
+        {
+          $request->merge( ['to_date' => \Carbon\Carbon::now()->format('Y-m-d') ] );
+        }       
+
         if($request->has('from_date') && $request->has('to_date'))
         {
         	$from_date = \Carbon\Carbon::parse($request->from_date)->format('Y-m-d');
@@ -39,10 +50,10 @@ class ReportsController extends Controller
 	        							->select('doctors.name', 'doctors.qualification', 
 	        								DB::raw('sum(opd_visits.doctor_fee) as total_doctor_fee'))
 	        							->groupBy('doctors.id')
-	        							->whereBetween('opd_visits.visit_date', [
-	        								$from_date,
-	        								$to_date,
-	        								])
+	        							->whereBetween(DB::raw('date(opd_visits.visit_date)'), [
+                          $from_date,
+                          $to_date,
+                          ])
 	        							->get();
 
 	        $facilities_collection = DB::table('opd_visit_facilities')
@@ -50,7 +61,7 @@ class ReportsController extends Controller
 	        							->join('facilities', 'facilities.id', '=', 'opd_visit_facilities.facility_id')
 	        							->select('facilities.name', DB::raw('opd_visit_facilities.amount as total_facility_collection'))
 	        							->groupBy('facilities.id')
-	        							->whereBetween('opd_visits.visit_date', [
+	        							->whereBetween(DB::raw('date(opd_visits.visit_date)'), [
 	        								$from_date,
 	        								$to_date,
 	        								])
