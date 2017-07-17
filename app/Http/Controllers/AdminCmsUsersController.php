@@ -48,6 +48,6 @@ class AdminCmsUsersController extends \crocodicstudio\crudbooster\controllers\CB
 
 		$data['page_title'] = trans("crudbooster.label_button_profile");
 		$data['row']        = CRUDBooster::first('cms_users',CRUDBooster::myId());		
-		$this->cbView('crudbooster::default.form',$data);				
+		return $this->cbView('crudbooster::default.form',$data);				
 	}
 }
